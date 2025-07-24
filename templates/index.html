@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prédiction état vanne</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Prédiction de l'état de la valve</h1>
+
+        <form method="POST">
+            <label for="cycle_id">Entrer l’ID du cycle :</label>
+            <input type="number" name="cycle_id" id="cycle_id" min="0" required>
+            <p>  </p>
+            <button type="submit">Prédire</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if prediction is not none %}
+            <div class="result {{ 'match' if prediction == ground_truth else 'mismatch' }}">
+                <h2>Résultat :</h2>
+                <p><strong>Cycle :</strong> {{ cycle_id }}</p>
+                <p><strong>Prédiction :</strong> {{ '✅ Optimale' if prediction == 1 else '❌ Non optimale' }}</p>
+                <p><strong>Vérité terrain :</strong> {{ '✅ Optimale' if ground_truth == 1 else '❌ Non optimale' }}</p>
+                <p><strong>Confiance du modèle :</strong> {{ (proba * 100) | round(2) }}%</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
