@@ -1,5 +1,10 @@
 flask
+pandas
 joblib
+numpy
 scikit-learn
 xgboost
-numpy
+tqdm
+seaborn
+matplotlib
+dill
